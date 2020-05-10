@@ -1,0 +1,45 @@
+header{
+    text-align: center;
+    background-color: purple;
+    color: white;
+    padding: 10px;
+}
+
+.jumbotron{
+    width: 100%;
+}
+
+.row{
+    margin: 15px;
+}
+
+.card{
+    display: inline-block;
+    padding: 10px;
+}
+
+.card-text{
+    font-size:smaller;
+}
+
+.card-body{
+    padding: 15px;
+}
+
+#fiveDay{
+    background-color: white;
+}
+
+/* Footer */
+footer{
+    text-align: center;
+    background-color:purple;
+    color:white;
+    border-top: solid 2px white;
+    padding-top: 18px;
+    padding-bottom: 12px;
+    font-size: smaller;
+    position: absolute;
+    width: 100%;
+}
+

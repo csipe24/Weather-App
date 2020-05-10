@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href= "assets/style.css">
+<title>Weather Application</title>
+</head>
+
+<body>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+    </div>
+</header>
+
+<!--Main/Container -->
+<div class="container">
+    <div class="row">
+    <div class="col-md-3">
+        <h2>Search a City</h2>
+        <form class="form-inline">
+        <div class="form-group mb-2">
+        <label for="cityInput" class="sr-only">City Search</label>
+        <input type="text" class="form-control" id="cityInput" placeholder="Search">
+        <button type="submit" class="btn btn-dark" id="search"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M15.7 13.3l-3.81-3.83A5.93 5.93 0 0013 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 000-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z"></path></svg></button>
+        </div>
+        </form>
+
+
+        <div class="card" style="width: 12rem;">
+        <ul class="list-group" id="city-view">
+            
+        </ul>
+        </div>
+    </div> 
+
+    <div class="col-md-9">
+    <div class="row">
+
+        <div class="jumbotron">
+            <div class="container">
+                <img>
+                <h3 id="date">Todays Date:</h3>
+                <h1 class="display-6" id="mainCity">City:</h1>
+                <h3 id="temperature">Temperature:</h3>
+                <h3 id="humidity">Humidity:</h3>
+                <h3 id="windSpeed">WindSpeed:</h3>
+                <h3 id="uvIndex">UV Index:</h3>
+             </div>
+        </div>
+
+    <div class="row">
+
+        <h1 class="position-absolute" >5 Day Forecast</h1>
+
+        <div class="jumbotron" id="fiveDay">
+
+            <div class="card" style="width: 7rem;">
+                <div class="card-body">
+                <p class="card-text" id="date1">Date:</p>
+                </div>
+
+                <div class="card-body">
+                <p class="card-text" id="temp1">Temperature:</p>
+                <p class="card-text" id="temp1">Humidity:</p>
+                </div>
+            </div>
+
+            <div class="card" style="width: 7rem;">
+                <div class="card-body">
+                <p class="card-text" id="date2">Date:</p>
+                </div>
+
+                <div class="card-body">
+                <p class="card-text">Temperature:</p>
+                <p class="card-text">Humidity:</p>
+                </div>
+            </div>
+
+            <div class="card" style="width: 7rem;">
+                <div class="card-body">
+                <p class="card-text" id="date3">Date:</p>
+                </div>
+
+                <div class="card-body">
+                <p class="card-text">Temperature:</p>
+                <p class="card-text">Humidity:</p>
+                </div>
+            </div>
+
+            <div class="card" style="width: 7rem;">
+                <div class="card-body">
+                <p class="card-text" id="date4">Date:</p>
+                </div>
+
+                <div class="card-body">
+                <p class="card-text">Temperature:</p>
+                <p class="card-text">Humidity:</p>
+                </div>
+            </div>
+
+            <div class="card" style="width: 7rem;">
+                <div class="card-body">
+                <p class="card-text" id="date5">Date:</p>
+                </div>
+
+                <div class="card-body">
+                <p class="card-text">Temperature:</p>
+                <p class="card-text">Humidity:</p>
+                </div>
+            </div>
+        </div>
+        
+                
+
+    </div>
+    </div>
+    </div>
+
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<footer>
+    <p>Weather App - Made by Christopher Sipe</p>
+ </footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="./script.js"></script>
+
+</body>
+
+</html>
