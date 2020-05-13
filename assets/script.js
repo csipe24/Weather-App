@@ -71,7 +71,7 @@ function getWeather(city){
    var cityHumidity = response.list[0].main.humidity;
    var cityWindSpeed = response.list[0].wind.speed;
    var img =  response.list[0].weather[0].icon;
-   var imgURL = "http://openweathermap.org/img/wn/"+img+"@2x.png" 
+   var imgURL = "https://openweathermap.org/img/wn/"+img+"@2x.png" 
   
 
     $("#mainCity").text(cityName);
