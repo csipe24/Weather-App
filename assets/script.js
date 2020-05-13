@@ -60,13 +60,10 @@ function getWeather(city){
   
   
   var queryURL = url+"q="+city+"&appid="+apiKey;
-  console.log(queryURL);
     $.ajax({
             url: queryURL,
             method: "GET"
           }).then(function(response) {
-            console.log(response);
-
 
    var cityName = response.city.name;
    var cityTemperature = response.list[0].main.temp;
@@ -86,14 +83,13 @@ function getWeather(city){
    var lat = response.city.coord.lat;
    var lon = response.city.coord.lon;
    
-   var uvurl = "http://api.openweathermap.org/data/2.5/uvi?";
+   var uvurl = "https://api.openweathermap.org/data/2.5/uvi?";
    var apiKey = "101700968986c9ab530374c4e3041d7b";
    var UVURL = uvurl+"&appid="+apiKey+"&lat="+lat+"&lon="+lon;
      $.ajax({
              url: UVURL,
              method: "GET"
            }).then(function(response) {
-             console.log(response);
 
           var cityUVIndex = response.value;
           $("#uvIndex").empty();
