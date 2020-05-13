@@ -127,7 +127,7 @@ function getForecast(city){
 
 
             var img =  response.list[0].weather[0].icon;
-            var imgURL = "http://openweathermap.org/img/wn/"+img+"@2x.png" 
+            var imgURL = "https://openweathermap.org/img/wn/"+img+"@2x.png" 
             $("#weatherIcon"+i).attr("src", imgURL);
             };
           })
