@@ -11,7 +11,7 @@ You will notice that each time you search a city it will automatically save the 
 
 Our weather app operates in your web browser and pulls weather from openweatherAPI.
 
-![picture](assets/preview.jpg)
+![picture](assets/Preview.png)
 
 Built With
 Microsoft Visual Studio Code

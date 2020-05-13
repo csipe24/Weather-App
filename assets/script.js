@@ -1,49 +1,87 @@
 // Get local storage - Last City
-var storedCity = JSON.parse(localStorage.getItem("storedCity"));
-console.log(storedCity);
+var cacheKey = "storedCity";
+var storedCity = JSON.parse(localStorage.getItem(cacheKey));
 
-if(! storedCity) {
-  storedCity = [];
+if(!storedCity) {
+  storedCity = ["Seattle"];
 };
 
 renderCities();
+getWeather(storedCity.slice(-1)[0]);
+getForecast(storedCity.slice(-1)[0]);
 
 // Function for displaying stored cities
 function renderCities() {
   $("#city-view").empty();
-  for (var i = 0; i < storedCity.length; i++) {
-  var newCity = $('<div>'+ storedCity[i] +'</div>');
-  newCity.addClass("card");
-  newCity.attr('id', 'displayCity');
-  $("#city-view").append(newCity);
-};
+  for(i=0; i<storedCity.length; i++){
+    var newCity = $("<button>"+ storedCity[i] +"</button>");
+    newCity.addClass("card");
+    newCity.attr("class", "cityBtn"); 
+    $("#city-view").append(newCity);
+  };
 };
 
+
+// Clicking Saved Cities to display Data
+$(".cityBtn").each(function(){
+$(this).on( 'click', function() {
+  event.preventDefault();
+var city =$(this).text();
+  console.log(city);
+  getWeather(city);
+  getForecast(city);
+});
+});
+
+// Onclick for Search City w/prevent default
+var search = $("#search");
+$(search).on( 'click', function() {
+    event.preventDefault();
+
+var city =$("#cityInput").val();
+    storedCity.push(city);
+    console.log(city);
+    
+getWeather(city);
+getForecast(city);
+
+var newCity = $('<button>'+ city +'</button>');
+newCity.addClass("card");
+newCity.attr("class", "cityBtn");
+$("#city-view").append(newCity);
+
+localStorage.setItem("storedCity", JSON.stringify(storedCity));
+});
+
 // Create an AJAX function
-function getWeather(){
+function getWeather(city){
   var url = "https://api.openweathermap.org/data/2.5/forecast?";
-  var city =$("#cityInput").val();
   var apiKey = "101700968986c9ab530374c4e3041d7b";
   
+  
   var queryURL = url+"q="+city+"&appid="+apiKey;
+  console.log(queryURL);
     $.ajax({
             url: queryURL,
             method: "GET"
           }).then(function(response) {
             console.log(response);
 
-   var cityName = response.city.name;
-   $("#mainCity").text(cityName);
 
+   var cityName = response.city.name;
    var cityTemperature = response.list[0].main.temp;
    var cityTemp = ("Temperature: "+(Math.floor(cityTemperature - 273.15)*9/5+32)+"°F");
-   $("#temperature").text(cityTemp);
-   
    var cityHumidity = response.list[0].main.humidity;
-   $("#humidity").text("Humidity: "+cityHumidity+"%");
-
    var cityWindSpeed = response.list[0].wind.speed;
-   $("#windSpeed").text("Wind Speed: "+cityWindSpeed+"MPH");
+   var img =  response.list[0].weather[0].icon;
+   var imgURL = "http://openweathermap.org/img/wn/"+img+"@2x.png" 
+  
+
+    $("#mainCity").text(cityName);
+    $("#temperature").text(cityTemp);
+    $("#humidity").text("Humidity: "+cityHumidity+"%");
+    $("#windSpeed").text("Wind Speed: "+cityWindSpeed+"MPH");
+    $("#weatherIcon").attr("src", imgURL);
 
    var lat = response.city.coord.lat;
    var lon = response.city.coord.lon;
@@ -58,38 +96,43 @@ function getWeather(){
              console.log(response);
 
           var cityUVIndex = response.value;
+          $("#uvIndex").empty();
+          $("#uvIndex").append("UV Index:")
           $("#uvIndex").append("<button id=uvButton>" + response.value + "</button>");
           if (response.value < 3){
-            $("#uvButton").css("background", "green")
+            $("#uvButton").css({"background-color": "green", "font-size": "125%"})
           }
           else if (response.value < 6 || response.value > 3){
-            $("#uvButton").css("background", "yellow")
+            $("#uvButton").css({"background-color": "yellow", "font-size": "125%"})
           }
           else
-            $("#uvButton").css("background", "red")
-          
+            $("#uvButton").css({"background-color": "red", "font-size": "125%"})    
   });
 });
 };
 
 // Get forecast
-function getForecast(){
+function getForecast(city){
   var url = "https://api.openweathermap.org/data/2.5/forecast?";
-  var city =$("#cityInput").val();
   var apiKey = "101700968986c9ab530374c4e3041d7b";
-  
   var queryURL = url+"q="+city+"&appid="+apiKey;
     $.ajax({
             url: queryURL,
             method: "GET"
           }).then(function(response) {
+            console.log("got forecast")
             for(i=1; i<6; i++){
-            var cityTemp = ("Temperature: "+(Math.floor(response.list[i].main.temp - 273.15)*9/5+32)+"°F");
+            var cityTemp = ("Temp: "+(Math.floor(response.list[i].main.temp - 273.15)*9/5+32)+"°F");
             var cityHumidity = response.list[i].main.humidity;
             var cityWindSpeed = response.list[i].wind.speed;
-            $("#temp").eq(i).text(cityTemp);
-            $("#humidity").eq(i).text("Humidity: "+cityHumidity+"%");
-            $("#windSpeed").eq(i).text("Wind Speed: "+cityWindSpeed+"MPH");
+            $("#temp"+i).html(cityTemp+"°F");
+            $("#hum"+i).html("Humidity: "+cityHumidity+"%");
+            $("#win"+i).text("Wind Spd: "+cityWindSpeed+"MPH");
+
+
+            var img =  response.list[0].weather[0].icon;
+            var imgURL = "http://openweathermap.org/img/wn/"+img+"@2x.png" 
+            $("#weatherIcon"+i).attr("src", imgURL);
             };
           })
         };
@@ -97,51 +140,28 @@ function getForecast(){
 // Post Current Date onto Jumbotron & Cards
     var dateEl = $("#date");
     $(dateEl).text(moment(new Date()).format("MM/DD/YYYY"));
-    var date1 = $("#date1");
-    var date2 = $("#date2");
-    var date3 = $("#date3");
-    var date4 = $("#date4");
-    var date5 = $("#date5");
 
-    $(date1).text(moment(new Date()).add(1, 'd').format("MM/DD/YY"));
-    $(date2).text(moment(new Date()).add(2, 'd').format("MM/DD/YY"));
-    $(date3).text(moment(new Date()).add(3, 'd').format("MM/DD/YY"));
-    $(date4).text(moment(new Date()).add(4, 'd').format("MM/DD/YY"));
-    $(date5).text(moment(new Date()).add(5, 'd').format("MM/DD/YY"));
+    for (i=1; i<6; i++)
+    { var date = $("#date"+i)
+      $(date).text(moment(new Date()).add(i, 'd').format("MM/DD/YY"));
+    };
 
 
-// Onclick for Search City w/prevent default
-var search = $("#search");
-$(search).on( 'click', function() {
-    event.preventDefault();
+// // Onclick Event for save buttons
+// $(save).on( 'click', function() {
+//   console.log("Saved!");
 
-var city =$("#cityInput").val();
-    storedCity.push(city);
-    console.log(storedCity);
-    
-getWeather();
-getForecast();
-getLocation();
+// var buttonHour = $(this).data("hour");
+//   console.log(buttonHour);
 
-var newCity = $('<div>'+ city +'</div>');
-newCity.addClass("card");
-$("#city-view").append(newCity);
+// var taskInput = $("#task-" + buttonHour),
+//   taskDes = taskInput.val();
+//   console.log(taskInput.val());
 
-localStorage.setItem("storedCity", JSON.stringify(storedCity));
-});
+//   tasks["#task" + buttonHour] = taskDes;
+
+// localStorage.setItem("tasks",JSON.stringify(tasks));
+// });
 
 
-
-// Clicking Saved Cities to display Data
-
-// var save = $(".save"),
-//     tasks = JSON.parse(localStorage.getItem("tasks")) || {};
-//     console.log(tasks);
-
-// // Loop Over Each Save Button to input object items
-// save.each(function(){
-//     var buttonHour = $(this).data("hour"),
-//         taskInput = $("#task-" + buttonHour);  
-//     taskInput.val( tasks ["#task" + buttonHour])
-//     })
 
